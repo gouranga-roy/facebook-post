@@ -92,9 +92,14 @@
                             <a href="#">All profiles</a>
                             <div class="divider-0"></div>
                             @foreach($profiles -> sortByDesc('id') as $item)
-                            <a href="#" class="user-data-box-item">
-                                <img src="https://placehold.co/40x40?text=Photo" alt="" />
-                                <span>{{ $item -> getFullNameAttribute() }}</span>
+                            <a href="#" class="user-data-box-item d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-2">
+                                    <img src="https://placehold.co/40x40?text=Photo" alt="" />
+                                    <span>{{ $item -> getFullNameAttribute() }}</span>
+                                </div>
+                                @if($item -> post_count > 0)
+                                    <span class="badge text-bg-secondary">{{ $item -> post_count}}</span>
+                                @endif
                             </a>
                             @endforeach
                         </div>
@@ -158,7 +163,7 @@
                         <div class="body-icon">
                             <img src="https://placehold.co/40x40?text=Photo" alt="" />
                         </div>
-                        <span>Asraful Haque</span>
+                        <span>Gouranga Roy</span>
                     </a>
                 </li>
 
@@ -254,7 +259,7 @@
                                 <div class="story-user">
                                     <img src="https://placehold.co/40x40?text=Photo" alt="" />
                                 </div>
-                                <span>Asraful Haque</span>
+                                <span>Gouranga Roy</span>
                             </div>
 
                             <div class="story-item" style="
@@ -263,7 +268,7 @@
                                 <div class="story-user">
                                     <img src="https://placehold.co/40x40?text=Photo" alt="" />
                                 </div>
-                                <span>Asraful Haque</span>
+                                <span>Gouranga Roy</span>
                             </div>
 
                             <div class="story-item" style="
@@ -272,7 +277,7 @@
                                 <div class="story-user">
                                     <img src="https://placehold.co/40x40?text=Photo" alt="" />
                                 </div>
-                                <span>Asraful Haque</span>
+                                <span>Gouranga Roy</span>
                             </div>
 
                             <div class="story-item" style="
@@ -281,7 +286,7 @@
                                 <div class="story-user">
                                     <img src="https://placehold.co/40x40?text=Photo" alt="" />
                                 </div>
-                                <span>Asraful Haque</span>
+                                <span>Gouranga Roy</span>
                             </div>
                         </div>
                     </div>
@@ -355,7 +360,7 @@
                             <img src="https://placehold.co/40x40?text=Photo" alt="" />
                             <div class="user-details">
                                 <a class="author" href="#">{{  $item -> profile -> full_name }}</a>
-                                <span>10m
+                                <span>{{ $item -> post_time_ago }}
                                     <svg fill="currentColor" viewBox="0 0 16 16" width="1em" height="1em" class="x1lliihq x1k90msu x2h7rmj x1qfuztq xcza8v6 x1kpxq89 xsmyaan" title="Shared with Public">
                                         <title>Shared with Public</title>
                                         <g fill-rule="evenodd" transform="translate(-448 -544)">
@@ -443,10 +448,10 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <a href="#">Kajal Datta, Sufia Sepu and 550 others</a>
+                                <a href="#">Gouranga Roy, Uttam Utpol and 550 others</a>
                             </div>
                             <div class="counts">
-                                <a href="#">95 Comments</a>
+                                <a href="#">{{ $item -> comment_count }} Comments</a>
                             </div>
                         </div>
                         <div class="divider-0"></div>
@@ -487,9 +492,12 @@
                                         <div class="scrollable-body">
                                             <div class="user-data-box-item d-flex align-items-center gap-2 mb-2 w-100">
                                                 <div class="d-flex align-items-center justify-content-between gap-2 w-100">
-                                                    <div>
+                                                    <div class="d-flex align-items-center gap-2">
                                                         <img src="https://placehold.jp/30/60x60.png?text=User" class="rounded-circle" style="width:40px;" alt="">
-                                                        <span>User</span>
+                                                        <div class="d-flex flex-column">
+                                                            <span>User</span>
+                                                            {{ $item -> post_time_ago }}
+                                                        </div>
                                                     </div>
                                                     <div>
                                                         <select name="profile_id" id="" class="form-select select-profile">
@@ -501,17 +509,31 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <p>Below is a static modal example (meaning its position and display have been overridden)...</p>
+                                            <p> {{ $item -> post_content }}</p>
                                             <img class="w-100 rounded-4 mb-4" style="max-height: 400px; object-fit:cover;" src="https://scontent.fdac157-1.fna.fbcdn.net/v/t39.30808-6/515278101_1188600709961212_7427247453596932886_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=127cfc&_nc_ohc=j6KCFTCKQ4oQ7kNvwHVOX8P&_nc_oc=AdkR6HlOJk1GHREkI7qQHNBPeD5Xg4RsO5KcoV87DpgaohDxaVgweCFGKzmmpTyTgxM&_nc_zt=23&_nc_ht=scontent.fdac157-1.fna&_nc_gid=4sb1gNPoLzn3CE6XfGm_Ig&oh=00_Afbfu1mbZR73v6WQo881zLlly67g0aT-5hRmdYMI2kRTvA&oe=68C98852" alt="">
                                             <h4>Comments</h4>
                                             <div class="comment_list mb-2 p-3 rounded-4">
-                                                @foreach($comments -> sortByDesc('id') as $comment)
+                                                @foreach($item -> comments as $commItem)
                                                 <div class="user-data-box-item">
                                                     <div class="d-flex align-items-center gap-2 mb-2">
                                                         <img src="https://placehold.jp/30/60x60.png?text=User" class="rounded-circle" style="width:40px;" alt="">
-                                                        <span>User</span>
+                                                        <div class="d-flex flex-column">
+                                                            <span>{{ $commItem->profile->full_name }}</span>
+                                                            <span style="font-size:12px;">{{ $commItem -> comment_time_ago }}
+                                                                <svg fill="currentColor" viewBox="0 0 16 16" width="1em" height="1em" class="x1lliihq x1k90msu x2h7rmj x1qfuztq xcza8v6 x1kpxq89 xsmyaan" title="Shared with Public">
+                                                                    <title>Shared with Public</title>
+                                                                    <g fill-rule="evenodd" transform="translate(-448 -544)">
+                                                                        <g>
+                                                                            <path d="M109.5 408.5c0 3.23-2.04 5.983-4.903 7.036l.07-.036c1.167-1 1.814-2.967 2-3.834.214-1 .303-1.3-.5-1.96-.31-.253-.677-.196-1.04-.476-.246-.19-.356-.59-.606-.73-.594-.337-1.107.11-1.954.223a2.666 2.666 0 0 1-1.15-.123c-.007 0-.007 0-.013-.004l-.083-.03c-.164-.082-.077-.206.006-.36h-.006c.086-.17.086-.376-.05-.529-.19-.214-.54-.214-.804-.224-.106-.003-.21 0-.313.004l-.003-.004c-.04 0-.084.004-.124.004h-.037c-.323.007-.666-.034-.893-.314-.263-.353-.29-.733.097-1.09.28-.26.863-.8 1.807-.22.603.37 1.166.667 1.666.5.33-.11.48-.303.094-.87a1.128 1.128 0 0 1-.214-.73c.067-.776.687-.84 1.164-1.2.466-.356.68-.943.546-1.457-.106-.413-.51-.873-1.28-1.01a7.49 7.49 0 0 1 6.524 7.434" transform="translate(354 143.5)"></path>
+                                                                            <path d="M104.107 415.696A7.498 7.498 0 0 1 94.5 408.5a7.48 7.48 0 0 1 3.407-6.283 5.474 5.474 0 0 0-1.653 2.334c-.753 2.217-.217 4.075 2.29 4.075.833 0 1.4.561 1.333 2.375-.013.403.52 1.78 2.45 1.89.7.04 1.184 1.053 1.33 1.74.06.29.127.65.257.97a.174.174 0 0 0 .193.096" transform="translate(354 143.5)"></path>
+                                                                            <path fill-rule="nonzero" d="M110 408.5a8 8 0 1 1-16 0 8 8 0 0 1 16 0zm-1 0a7 7 0 1 0-14 0 7 7 0 0 0 14 0z" transform="translate(354 143.5)"></path>
+                                                                        </g>
+                                                                    </g>
+                                                                </svg>
+                                                            </span>
+                                                        </div>
                                                     </div>
-                                                    <p class="ps-4 ms-4 fs-sm">{{ $comment -> comment_content }}</p>
+                                                    <p class="fs-sm">{{ $commItem -> comment_content }}</p>
                                                 </div>
                                                 @endforeach
                                             </div>

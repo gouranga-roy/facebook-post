@@ -10,13 +10,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     $profiles = Profile::all();
-    $posts = Post::with('profile')->get();
-    $comments = Comment::all();
+    $posts = Post::with([
+        'profile',
+        'comments.profile',
+    ])->get();
+
+    // return $posts;
 
     return view('home', [
         'profiles' => $profiles,
         'posts' => $posts,
-        'comments' => $comments,
     ]);
 });
 
