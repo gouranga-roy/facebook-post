@@ -451,7 +451,10 @@
                                 <a href="#">Gouranga Roy, Uttam Utpol and 550 others</a>
                             </div>
                             <div class="counts">
-                                <a href="#">{{ $item -> comment_count }} Comments</a>
+                                @php
+                                    $commentCount = $item -> comment_count;
+                                @endphp
+                                <a href="#">{{ $commentCount > 1 ? $commentCount . ' Comments' : $commentCount . ' Comment' }}</a>
                             </div>
                         </div>
                         <div class="divider-0"></div>
@@ -481,7 +484,7 @@
                         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h1 class="modal-title fs-5 ml-auto" id="staticBackdropLabel">Our Academy's Post</h1>
+                                    <h1 class="modal-title fs-5 ml-auto" id="staticBackdropLabel">{{ $item -> profile -> first_name }}'s Post</h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
 
@@ -495,7 +498,7 @@
                                                     <div class="d-flex align-items-center gap-2">
                                                         <img src="https://placehold.jp/30/60x60.png?text=User" class="rounded-circle" style="width:40px;" alt="">
                                                         <div class="d-flex flex-column">
-                                                            <span>User</span>
+                                                            <span>{{  $item -> profile -> full_name }}</span>
                                                             {{ $item -> post_time_ago }}
                                                         </div>
                                                     </div>
@@ -511,7 +514,11 @@
                                             </div>
                                             <p> {{ $item -> post_content }}</p>
                                             <img class="w-100 rounded-4 mb-4" style="max-height: 400px; object-fit:cover;" src="https://scontent.fdac157-1.fna.fbcdn.net/v/t39.30808-6/515278101_1188600709961212_7427247453596932886_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=127cfc&_nc_ohc=j6KCFTCKQ4oQ7kNvwHVOX8P&_nc_oc=AdkR6HlOJk1GHREkI7qQHNBPeD5Xg4RsO5KcoV87DpgaohDxaVgweCFGKzmmpTyTgxM&_nc_zt=23&_nc_ht=scontent.fdac157-1.fna&_nc_gid=4sb1gNPoLzn3CE6XfGm_Ig&oh=00_Afbfu1mbZR73v6WQo881zLlly67g0aT-5hRmdYMI2kRTvA&oe=68C98852" alt="">
-                                            <h4>Comments</h4>
+                                            @php
+                                                $commentCount = $item -> comment_count;
+                                            @endphp
+                                            <h4> {{ $commentCount > 0 ? 'Comments ' . $commentCount : 'No Comment' }}</h4>
+
                                             <div class="comment_list mb-2 p-3 rounded-4">
                                                 @foreach($item -> comments as $commItem)
                                                 <div class="user-data-box-item">
